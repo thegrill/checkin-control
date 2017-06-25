@@ -31,6 +31,7 @@ def _checkin(src_fs: FS, src_path: str, dst_fs: FS, dst_path: str, move: bool=Fa
 
 @singledispatch
 def checkin(src_fs: FS, src_path: str, dst_fs: FS, dst_path: str, move: bool=False):
+    """Checkin data to a file system"""
     return _checkin(**locals())
 
 
@@ -46,7 +47,7 @@ def __(src_path: Path, dst_path: Path, move: bool=False):
     return _checkin(src_fs, src_path, dst_fs, dst_path, move)
 
 
-def cleantree(tgt_fs, name):
+def cleantree(tgt_fs: FS, name: str):
     method = tgt_fs.remove if tgt_fs.isfile(name) else tgt_fs.removetree
     method(name)
     remaining_parts = Path(name).parts
